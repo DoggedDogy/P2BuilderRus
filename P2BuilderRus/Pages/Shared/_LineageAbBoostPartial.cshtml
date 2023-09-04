@@ -1,0 +1,166 @@
+﻿@using P2BuiderRus.Model
+@model List<string>[]
+    <label class="text">Background Boosts:</label>
+    <div class="d-flex gap-2 mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ff5722" class="bi bi-shield-fill-plus" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm-.5 5a.5.5 0 0 1 1 0v1.5H10a.5.5 0 0 1 0 1H8.5V9a.5.5 0 0 1-1 0V7.5H6a.5.5 0 0 1 0-1h1.5V5z" />
+        </svg>
+        <select class="form-select lineage-field" idt="plus">
+            @foreach (string item in Model[0])
+            {
+                @if (item == "Free")
+                {
+                    @foreach (string stat in new string[] { "Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma" })
+                    {
+                        <option class="lineage-field">@stat</option>
+                    }
+                }
+                else
+                {
+                    <option class="lineage-field">@item</option>
+                }
+            }
+        </select>
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ff5722" class="bi bi-shield-fill-plus" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm-.5 5a.5.5 0 0 1 1 0v1.5H10a.5.5 0 0 1 0 1H8.5V9a.5.5 0 0 1-1 0V7.5H6a.5.5 0 0 1 0-1h1.5V5z" />
+        </svg>
+        <select class="form-select lineage-field" idt="plus">
+            @foreach (string item in Model[1])
+            {
+                @if (item == "Free")
+                {
+                    @foreach (string stat in new string[] { "Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma" })
+                    {
+                        <option class="lineage-field">@stat</option>
+                    }
+                }
+                else
+                {
+                    <option class="lineage-field">@item</option>
+                }
+            }
+        </select>
+    </div>
+    <script>
+            var cont;
+            var ct;
+            var t;
+            var k;
+            $('select.lineage-field').on('input', function () {
+                ct = $(this).children('option:selected').text();
+                console.log("ct=" + ct);
+                console.log($(this).attr("idt") == "plus");
+                if (cont == ct) {
+                    t = 0;
+                    k = 0;
+                }
+                else {
+                    if ($(this).attr("idt") == "plus") {
+                        t = 2;
+                        k = -2;
+                    }
+                    if ($(this).attr("idt") == "minus") {
+                        t = -2;
+                        k = 2;
+                    }
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/statUpdate?',
+                    data: {
+                        ints: [$(".inworkSc#Strength").text(), $(".inworkSc#Dexterity").text(), $(".inworkSc#Constitution").text(), $(".inworkSc#Intelligence").text(), $(".inworkSc#Wisdom").text(), $(".inworkSc#Charisma").text()],
+                        //ints: [10, 10, 10, 10, 10, 10],
+                        name: cont,
+                        plus: k,
+                    },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                        console.log("change -" + k + cont);
+                    },
+                    success: function (response) {
+                        console.log("change -" + k + cont);
+                        $('#freeAbBoosts').html(response);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/statUpdate?',
+                            data: {
+                                ints: [$(".inworkSc#Strength").text(), $(".inworkSc#Dexterity").text(), $(".inworkSc#Constitution").text(), $(".inworkSc#Intelligence").text(), $(".inworkSc#Wisdom").text(), $(".inworkSc#Charisma").text()],
+                                //ints: [10, 10, 10, 10, 10, 10],
+                                name: ct,
+                                plus: t,
+                            },
+                            error: (error) => {
+                                console.log(JSON.stringify(error));
+                                console.log("change");
+                            },
+                            success: function (response) {
+                                console.log("change +" + t + ct);
+                                $('#freeAbBoosts').html(response);
+                            }
+                        })
+                    }
+                })
+            });
+            $('select.lineage-field').on('mouseenter', function () {
+                cont = $(this).children('option:selected').text()
+
+                console.log("cont=" + cont);
+            });
+            $(function starting1() {
+                $('select.lineage-field').each(function () { //loop through all the select elements
+                    var val = this.value;
+                    $('select.lineage-field').not(this).find('option.lineage-field').filter(function () { //filter option elements having value as selected option
+                        return this.value === val;
+                    }).prop('disabled', true); //disable those option elements
+                });
+                //if (crit == 1) {
+                    //var num = 0;
+                    var kr = 270;
+                    $("select.lineage-field").each(function () {
+                        kr = kr + 70;
+                        if ($(this).attr("idt") == "plus") {
+                            var t = 2
+                        }
+                        else {
+                            var t = -2
+                        }
+                        var n = $(this).children('option:first').text();
+                        setTimeout(function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/statUpdate?',
+                                data: {
+                                    ints: [$(".inworkSc#Strength").text(), $(".inworkSc#Dexterity").text(), $(".inworkSc#Constitution").text(), $(".inworkSc#Intelligence").text(), $(".inworkSc#Wisdom").text(), $(".inworkSc#Charisma").text()],
+                                    //ints: [10, 10, 10, 10, 10, 10],
+                                    name: n,
+                                    plus: t,
+                                },
+                                error: (error) => {
+                                    console.log(JSON.stringify(error));
+                                    console.log(n);
+                                },
+                                success: function (response) {
+                                    console.log("linBoost");
+                                    $('#freeAbBoosts').html(response);
+                                    @*num = num + 1;
+                                    if (num == @Model.Length) {
+                                        starting2(1);
+                                    }*@
+                                }
+                            })
+                        }, kr);
+                    });
+                //}
+            });
+            $('select.lineage-field').on('change', function () {
+                $('option.lineage-field').prop('disabled', false); //reset all the disabled options on every change event
+                $('select.lineage-field').each(function () { //loop through all the select elements
+                    var val = this.value;
+                    $('select.lineage-field').not(this).find('option.lineage-field').filter(function () { //filter option elements having value as selected option
+                        return this.value === val;
+                    }).prop('disabled', true); //disable those option elements
+                });
+            }).change();
+    </script>
+
+

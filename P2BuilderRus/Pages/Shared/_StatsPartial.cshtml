@@ -1,0 +1,23 @@
+﻿@using P2BuiderRus.Model
+@model List<Stat>
+    @foreach (Stat item in Model)
+    {
+        <div class="col">
+            <div class="row">
+                <label class="layout text-con" for="@item.Name">@item.Name</label>
+            </div>
+            <div class="row">
+                @if (@item.Modifier > 0)
+                {
+                    <label class="layout text" id="@item.Name" for="@item.Modifier">+@item.Modifier</label>
+                }
+                else
+                {
+                    <label class="layout text" id="@item.Name" for="@item.Modifier">@item.Modifier</label>
+                }
+                <label class="layout text-sil" id="@item.Name" for="@item.Score">@item.Score</label>
+            </div>
+        </div>
+    }
+
+

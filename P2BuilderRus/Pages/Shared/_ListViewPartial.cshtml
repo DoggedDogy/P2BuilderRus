@@ -1,0 +1,22 @@
+﻿@model List<string>
+@using P2BuilderRus.Pages
+@section scripts{
+    <script>
+        $(function () {
+            $('button.classDetails').on('click', function () {
+                $('#classDetails').load(`/classModel?id=${$(this).data('id')}`);
+            });
+        })
+    </script>
+}
+<aside class="sidebar">
+    <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+       @foreach (string item in Model)
+        {
+            <button type="button" data-id="@item" class="btn btn-primary" id="classDetails">@item</button>
+        }
+    </div>
+</aside>
+<div class="form-group" id="classDetails"></div>
+     @*model="IndexModel.OnGetClassModelAsync(Model[0])"*@
+    

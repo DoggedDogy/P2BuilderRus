@@ -1,0 +1,77 @@
+﻿@using P2BuiderRus.Model
+@model Lineage
+@{ 
+    this.ViewContext.HttpContext.Items["Stuff"] = "some-data";
+}
+<div>
+    <span class="d-inline-block text-con" id="nameLineage">@Model.Name</span><span></span>
+</div>
+<div>
+    <div>
+        <span class="d-inline-block text">Deskription: </span>
+        <span class="text-con">@Model.Desk</span>
+    </div>
+    <div>
+        <span class="d-inline-block text">Attribute Boosts: </span>
+       @{bool i = false;}
+       @foreach (string item in Model.AttributeBoost1)
+        {
+           @if (i)
+            {
+                <span class="text-con">or</span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+
+        }
+        <span class="text-con">and</span>
+       @{i = false;}
+       @foreach (string item in Model.AttributeBoost2)
+        {
+           @if (i)
+            {
+                <span class="text-con">or</span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+        }
+    </div>
+    <div>
+        <span class="d-inline-block text">Skills: </span>
+       @{i = false;}
+       @foreach (string item in Model.Skill1)
+        {
+           @if (i)
+            {
+                <span class="text-con">or</span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+        }
+        <span class="text-con">and</span>
+       @{i = false;}
+       @foreach (string item in Model.Skill2)
+        {
+           @if (i)
+            {
+                <span class="text-con">or</span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+        }
+    </div>
+    <div>
+        <span class="d-inline-block text">Ability: </span>
+       @{i = false;}
+       @foreach (string item in Model.SkillFeat)
+        {
+           @if (i)
+            {
+                <span class="text-con">and</span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+        }
+    </div>
+</div>
+    

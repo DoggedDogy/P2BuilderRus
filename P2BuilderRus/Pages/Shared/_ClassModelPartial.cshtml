@@ -1,0 +1,54 @@
+﻿@using P2BuiderRus.Model
+@model ClassModel
+<div>
+    <span class="d-inline-block name text-con" id="nameClass">@Model.ClassName</span><span></span>
+</div>
+<div>
+    <div>
+        <span class="d-inline-block text">Key Ability: </span>
+       @{bool i = false;}
+       @foreach (string item in Model.KeyAbility)
+        {
+           @if (i)
+            {
+                <span class="text-con">, </span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+        }
+    </div>
+    <div>
+        <span class="d-inline-block text">Hit Points: </span>
+        <span class="text-con"> @Model.HP</span>
+    </div>
+    <div>
+        <span class="d-inline-block text">Perseption: </span>
+        <span class="text-con"> @Model.PerceptionTraining</span>
+    </div>
+    <div>
+        <span class="d-inline-block text">Fortitude: </span>
+        <span class="text-con"> @Model.FortitudeTraining</span>
+    </div>
+    <div>
+        <span class="d-inline-block text">Reflex: </span>
+        <span class="text-con"> @Model.ReflexTraining</span>
+    </div>
+    <div>
+        <span class="d-inline-block text">Will: </span>
+        <span class="text-con">@Model.WillTraining</span>
+    </div>
+    <div>
+        <span class="d-inline-block text">Trained in: </span>
+       @{i = false;}
+       @foreach (string item in Model.TrainedSkills)
+        {
+           @if (i)
+            {
+                <span class="text-con">, </span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+        }
+        <span class="text-con">@Model.TrainedSkillsNumber additional skills</span>
+    </div>
+</div>

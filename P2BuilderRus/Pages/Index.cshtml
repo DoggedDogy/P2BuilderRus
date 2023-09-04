@@ -1,0 +1,349 @@
+﻿@page "{handler?}"
+@model P2BuilderRus.Pages.IndexModel
+@using P2BuiderRus.Model
+@section scripts{
+    <script>
+        $(function () {
+            $('button.classDetails').on('click', function () {
+                $('#classDetails').load(`/classModel?name=${$(this).data('id')}`);
+            });
+        })
+        $(function () {
+            $('button.raceDetails').on('click', function () {
+                $('#raceDetails').load(`/race?name=${$(this).data('id')}`);
+            });
+        })
+        $(function () {
+            $('button.lineageDetails').on('click', function () {
+                $('#lineageDetails').load(`/lineage?name=${$(this).data('id')}`);
+            });
+        })
+        $(function () {
+            $('button.stat').on('click', function () {
+                $('#linAbBoosts').load(`/lineageBoosts?name=${$('#LineageName').text()}`);
+                $('#raceAbBoosts').load(`/raceBoosts?name=${$('#RaceName').text()}`);
+                $('#classAbBoosts').load(`/classBoosts?name=${$('#ClassName').text()}`);
+                $('#freeAbBoosts').load(`/statList?`);
+            });
+        })
+        $(function () {
+            $('button.saveClass').on('click', function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/classModel?',
+                    data: {
+                        name: $('#nameClass').text(),
+                    },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                    },
+                    success: function (response) {
+                        console.log();
+                        $('#ClassName').text(response.result);
+                    }
+                })
+            });
+        })
+        $(function () {
+            $('button.saveRace').on('click', function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/race?',
+                    data: {
+                        name: $('#nameRace').text(),
+                    },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                    },
+                    success: function (response) {
+                        console.log();
+                        $('#RaceName').text(response.result);
+                    }
+                })
+            });
+        })
+        $(function () {
+            $('button.saveLineage').on('click', function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/lineage?',
+                    data: {
+                        name: $('#nameLineage').text(),
+                    },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                    },
+                    success: function (response) {
+                        console.log();
+                        $('#LineageName').text(response.result);
+                    }
+                })
+            });
+        })
+        $(function () {
+            $('#CharacterName').on('input', function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/name?',
+                    data: {
+                        name: $('#CharacterName').text(),
+                    },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                    },
+                    success: function (response) {
+                        console.log();
+                        $('#CharacterName').text(response.result);
+                    }
+                })
+            });
+        })
+        $(function statsShow() {
+            $('button.saveStats').on('click', function () {
+                var intList = [$(".text-sil#Strength").text(), $(".text-sil#Dexterity").text(), $(".text-sil#Constitution").text(), $(".text-sil#Intelligence").text(), $(".text-sil#Wisdom").text(), $(".text-sil#Charisma").text()]
+                console.log(intList);
+                $.ajax({
+                    type: 'POST',
+                    url: '/stats?',
+                    data: {
+                        ints: intList,
+                    },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                    },
+                    success: function (response1) {
+                        console.log(intList);
+                        $('#forStats').html(response1);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/skillList?',
+                            data: {
+                                ints: intList,
+                            },
+                            error: (error) => {
+                                console.log(JSON.stringify(error));
+                            },
+                            success: function (response2) {
+                                console.log(intList);
+                                $('#forSkills').html(response2);
+                            }
+                        })
+                    }
+                })
+            })
+        });
+        $(function () {
+            $('button.skill').on('click', function () {
+                var intList = [$(".text-sil#Strength").text(), $(".text-sil#Dexterity").text(), $(".text-sil#Constitution").text(), $(".text-sil#Intelligence").text(), $(".text-sil#Wisdom").text(), $(".text-sil#Charisma").text()]
+                console.log(intList);
+                $.ajax({
+                    type: 'POST',
+                    url: '/skillBoost?',
+                    data: {
+                        ints: intList,
+                    },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                    },
+                    success: function (response) {
+                        console.log(intList);
+                        $('#skillboosts').html(response);
+                    }
+                })
+            });
+        });
+        $(function () {
+            $("select").each(function () {
+                if ($(this).children('option:selected').attr("disabled")) {
+                    $('button.saveStats').prop('disabled', true)
+                }
+            });
+            $("select").on('change', function () {
+                $("select").each(function () {
+                    if ($(this).children('option:selected').attr("disabled")) {
+                        $('button.saveStats').prop('disabled', true)
+                    }
+                })
+            });
+        })
+    </script>
+}
+            <!DOCTYPE html>
+<html>
+<head onload="load">
+    <meta charset="utf-8" />
+    <title>P2 Character Builder - Step 1</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm2r7QIf+oTGc5MKFpTvMkUT"
+          crossorigin="anonymous">
+</head>
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-2 text-white">
+            <div class="d-grid col-12 mx-auto container-box">
+                <button type="button" class="btn btn-bd-primary modal-toggler" id="class" data-bs-toggle="modal" data-bs-target="#ClassModel">
+                    <span class="text-con">Class:</span><br>
+                    <span id="ClassName" class="text">Fighter</span>
+                </button>
+                <button type="button" class="btn btn-bd-primary modal-toggler" id="race" data-bs-toggle="modal" data-bs-target="#Race">
+                    <span class="text-con">Race:</span><br>
+                    <span id="RaceName" class="text">Human</span>
+                </button>
+                <button type="button" class="btn btn-bd-primary modal-toggler" id="lineage" data-bs-toggle="modal" data-bs-target="#Lineage">
+                    <span class="text-con">Background:</span><br>
+                    <span id="LineageName" class="text">Guard</span>
+                </button>
+            </div>
+            <div class="d-grid col-12 mx-auto container-box">
+                <label>Level 1</label>
+                <button type="button" class="btn btn-bd-primary modal-toggler stat" id="stat" data-bs-toggle="modal" data-bs-target="#StatBoosts">
+                    <span class="text-con">Set Abilities</span><br>
+                </button>
+                <button type="button" class="btn btn-bd-primary modal-toggler skill" id="skill" data-bs-toggle="modal" data-bs-target="#SkillBoosts">
+                    <span class="text-con">Set skills</span><br>
+                </button>
+            </div>
+        </div>
+        <div class="col overflow-auto h-100 py-5">
+            <div class="container-box">
+                <div class="form-group">
+                    <label class="text-sil bot" for="CharacterName">Character Name:</label>
+                    <input type="text" placeholder="Name" class="form-control short-field text-box" id="CharacterName" name="CharacterName" placeholder="Unknown Adventurer">
+                </div>
+            </div>
+            <div class="row" id="forStats"></div>
+            <div class="col-2 container-box" id="forSkills"></div>
+        </div>
+
+        <!-- Button trigger modal -->
+        @*<div class="form-group">
+                <label for="RaceName">Race:</label>
+                <select class="form-control" id="RaceName" name="RaceName" asp-items="ViewBag.Races">
+                    <option value="">-- Select a race --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="LineageName">Background:</label>
+                <select class="form-control" id="LineageName" name="LineageName" asp-items="ViewBag.Lineages">
+                    <option value="">-- Select a background --</option>
+                </select>
+            </div>*@
+
+
+    </div>
+</div>
+
+<div class="modal fade" id="ClassModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header modal-body-color">
+                <h1 class="modal-title-mod fs-5" id="staticBackdropLabel">Class</h1>
+            </div>
+            <div class="modal-body modal-body-color row" id="class">
+                <div class="sidebar col-md-2">
+                    @foreach (string item in Model.ClassList)
+                    {
+                        <button type="button" data-id="@item" class="btn btn-list classDetails">@item</button>
+                    }
+                </div>
+                <div class="main col-md-10" id="classDetails"></div>
+            </div>
+            <div class="modal-footer modal-body-color">
+                <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-modal saveClass" data-bs-dismiss="modal">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Race" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header modal-body-color">
+                <h1 class="modal-title-mod fs-5" id="staticBackdropLabel">Race</h1>
+            </div>
+            <div class="modal-body modal-body-color row" id="race">
+                <div class="sidebar col-md-2">
+                    <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                       @foreach (string item in Model.RaceList)
+                        {
+                            <button type="button" data-id="@item" class="btn btn-list raceDetails">@item</button>
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-10" id="raceDetails"></div>
+            </div>
+            <div class="modal-footer modal-body-color">
+                <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-modal saveRace" data-bs-dismiss="modal">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Lineage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header modal-body-color">
+                <h1 class="modal-title-mod fs-5" id="staticBackdropLabel">Lineage</h1>
+            </div>
+            <div class="modal-body modal-body-color row" id="class">
+                <div class="sidebar col-md-2">
+                    <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                        @foreach (string item in Model.LineageList)
+                        {
+                            <button type="button" data-id="@item" class="btn btn-list lineageDetails">@item</button>
+                        }
+                    </div>
+                </div>
+                <div class="form-group col-md-10" id="lineageDetails"></div>
+            </div>
+            <div class="modal-footer modal-body-color">
+                <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-modal saveLineage" data-bs-dismiss="modal">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" onload="load" id="StatBoosts" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header modal-body-color">
+                <h1 class="modal-title-mod fs-5" id="staticBackdropLabel">Set Starting Ability Boosts</h1>
+            </div>
+            <div class="modal-body modal-body-color row">
+                <div>
+                    <div id="raceAbBoosts">
+                    </div>
+                    <div id="linAbBoosts">
+                    </div>
+                    <div id="classAbBoosts">
+                    </div>
+                    <div id="freeAbBoosts">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer modal-body-color">
+                <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-modal saveStats" data-bs-dismiss="modal">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" onload="load" id="SkillBoosts" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div id="skillboosts">
+
+            </div>
+            <div class="modal-footer modal-body-color">
+                <button type="button" class="btn btn-modal" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-modal saveStats" data-bs-dismiss="modal">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

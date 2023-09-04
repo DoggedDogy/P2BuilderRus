@@ -1,0 +1,182 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    color: #ffffef;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #ffffef;
+}
+.navbar-style {
+    background-color: #171a1e;
+    border-bottom: 4px solid #ff5722;
+}
+
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #ffffef;
+    background-color: #ffffef;
+    border-color: #ffffef;
+}
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 18px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  background-color: #171a1e;
+}
+.modal-body-color {
+    /* Margin bottom by footer height */
+    /*margin-bottom: 60px;*/
+    background-color: #171a1e;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+.btn-bd-primary {
+    margin: 4px;
+    height: 60px;
+    padding-top: 1px;
+    --bs-btn-border-width: 4px;
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: #ffffef;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: #2d4059;
+    --bs-btn-hover-color: #ffffef;
+    --bs-btn-hover-border-color: #ff5722;
+    --bs-btn-border-radius: 8px;
+}
+.btn-modal {
+    height: 30px;
+    padding-top: 4px;
+    --bs-btn-border-width: 1px;
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: #c0c0c0;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: #c0c0c0;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-border-color: #fff;
+    --bs-btn-border-radius: 8px;
+    margin: 2px;
+}
+.btn-list {
+    padding-top: 1px;
+    --bs-btn-border-width: 1px;
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: #ffffef;
+    --bs-btn-bg: #171a1e;
+    --bs-btn-hover-color: #ff5722;
+    text-align: left;
+}
+.disabled {
+    form-select-disabled-color: #ffffef;
+    input-color: #ffffef;
+    form-select-color: #ffffef;
+}
+.modal-title-mod {
+    border-top: transparent;
+    color: #c0c0c0;
+}
+.text {
+    color: #fff;
+    font-weight: 500;
+}
+.text-con {
+    color: #fff;
+}
+.text-sml {
+    color: #fff;
+    font-size: 9px;
+}
+.text-sil {
+    color: #c0c0c0;
+}
+.keyword {
+    background-color: #2d4059;
+    color: #fff;
+}
+.container-box {
+    border-radius: 16px;
+    background-color: #222831;
+    margin: 8px 8px 8px 8px;
+    padding: 8px 8px 8px 8px;
+}
+.short-field {
+    color: #fff;
+    margin: 4px;
+    width: 400px;
+    border-width: 4px;
+    background-color: transparent;
+    border-color: #2d4059;
+    border-radius: 8px;
+}
+.bot {
+    margin-left: 8px;
+}
+.mod {
+    text-align: right;
+}
+.short-field:hover, .short-field:active, .short-field:hover+label, .short-field:active+label {
+    border-color: #ff5722;
+}
+.mar{
+
+}
+#boostCount {
+    font-size: 14px;
+    color: #fff;
+    vertical-align: central;
+    margin-left: -50px;
+}
+
+[type=radio].train {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio].train + svg {
+    cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio].train:checked + svg {
+    color: #ff5722;
+}

@@ -1,0 +1,91 @@
+﻿@using P2BuiderRus.Model
+@model List<Stat>
+    <label class="text">Free Boosts:</label>
+    <div class="row align-items-start">
+        <div class="col">
+            @foreach (Stat item in Model.GetRange(0, 3))
+            {
+            <div class="form-check">
+                <input type="checkbox" class="check" name="@item.Name">
+                <label class="layout text-con" for="@item.Name">@item.Name</label>
+                @if (@item.Modifier > 0)
+                 {
+                     <label class="layout text inworkMod" id="@item.Name" for="@item.Modifier">+@item.Modifier</label>
+                 }
+                 else
+                 {
+                     <label class="layout text inworkMod" id="@item.Name" for="@item.Modifier">@item.Modifier</label>
+                 }
+                <label class="layout text-sil inworkSc" id="@item.Name" for="@item.Score">@item.Score</label>
+            </div>
+            }
+        </div>
+        <div class="col text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" fill="#fff" class="bi bi-gear-wide" viewBox="0 0 16 16">
+                <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434L8.932.727zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z" />
+            </svg>
+            <span class='badge badge-warning' id='boostCount'>4</span>
+        </div>
+        <div class="col">
+            @foreach (Stat item in Model.GetRange(3, 3))
+            {
+                <div class="form-check">
+                    <input type="checkbox" class="check" name="@item.Name">
+                    <label class="layout text-con" for="@item.Name">@item.Name</label>
+                   @if (@item.Modifier > 0)
+                    {
+                        <label class="layout text inworkMod" for="@item.Modifier">+@item.Modifier</label>
+                    }
+                    else
+                    {
+                       <label class="layout text inworkMod" id="@item.Name" for="@item.Modifier">@item.Modifier</label>
+                    }
+                    <label class="layout text-sil inworkSc"  id="@item.Name" for="@item.Score">@item.Score</label>
+                </div>
+            }
+        </div>
+        <script>
+            $("input:checkbox").click(function () {
+                var bol = $("input:checkbox:checked").length >= 4;
+                $("input:checkbox").not(":checked").attr("disabled", bol);
+                $('#boostCount').text(4 - $("input:checkbox:checked").length);
+            });
+            $("input:checkbox").click(function () {
+                let scr = $(`.inworkSc#${$(this).attr("name")}`).text()*1;
+                let mod = $(`.inworkMod#${$(this).attr("name")}`).text()*1;
+                if ($(this).prop("checked")) {
+                    var t = 2
+                }
+                else {
+                    var t = -2
+                }
+                let z = scr + t;
+                console.log(z);
+                $(`.inworkSc#${$(this).attr("name")}`).text(z = scr + t);
+                z = mod + (t * 1 / 2);
+                $(`.inworkMod#${$(this).attr("name")}`).text(z);
+            });
+            //$(function () {
+
+            //        statsShow(ints);
+            //    })
+                    //$.ajax({
+                    //    type: 'POST',
+                    //    url: '/stats?',
+                    //    data: {
+                    //        name: $('#nameLineage').text(),
+                    //    },
+                    //    error: (error) => {
+                    //        console.log(JSON.stringify(error));
+                    //    },
+                    //    success: function (response) {
+                    //        console.log();
+                    //        $('#LineageName').text(response.result);
+                    //    }
+                    //})
+            //})
+        </script>
+    </div>
+
+
+

@@ -1,0 +1,67 @@
+﻿@using P2BuiderRus.Model
+@model Race
+<div>
+    <span class="d-inline-block text-con name" id="nameRace">@Model.Name</span><span></span>
+</div>
+<div>
+    <div>
+       @foreach (string item in Model.Keywords)
+       {<span class="badge keyword">@item</span>}
+    </div>
+    <div>
+        <span class="d-inline-block text ">Hit Points: </span>
+        <span class="text-con">@Model.HP</span>
+    </div>
+    <div>
+        <span class="d-inline-block text">Size: </span>
+        <span class="text-con">@Model.Size</span>
+    </div>
+    <div>
+        <span class="d-inline-block text">Speed: </span>
+        <span class="text-con">@Model.Speed</span>
+    </div>
+    <div>
+        <span class="d-inline-block text">Attribute Boosts: </span>
+       @{bool i = false;}
+       @foreach (string item in Model.AttributeBoosts)
+        {
+           @if (i)
+            {
+                <span class="text-con">, </span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+        }
+    </div>
+    <div>
+        <span class="d-inline-block text">Attribute Flaw(s): </span>
+       @{i = false;}
+       @foreach (string item in Model.AttributeFlaws)
+       {
+           @if (i)
+            {
+                <span class="text-con">, </span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+       }
+    </div>
+    <div>
+        <span class="d-inline-block text">Languages: </span>
+       @{i = false;}
+       @foreach (string item in Model.Languages)
+       {
+           @if (i)
+            {
+                <span class="text-con">, </span>
+            }
+            <span class="text-con">@item</span>
+            i = true;
+       }
+        <span class="text-con">and @Model.LanguagesNumber + Intelligence modifier addititonal languages</span>
+    </div>
+    <div>
+       @foreach (string item in Model.Special)
+        {<span class="d-inline-block text">@item: </span>}
+    </div>
+</div>
